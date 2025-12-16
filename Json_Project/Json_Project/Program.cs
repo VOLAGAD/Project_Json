@@ -24,7 +24,7 @@ namespace Project
         public static List<Person> GetPersonListFromFile(string pathFile)
         {
             if (!File.Exists(pathFile))
-                File.WriteAllText(pathFile, "{}");
+                File.WriteAllText(pathFile, "[]");
 
             string json = File.ReadAllText(pathFile);
             List<Person> persons = JsonSerializer.Deserialize<List<Person>>(json);
@@ -75,7 +75,11 @@ namespace Project
             if (Persons.Count == 0)
                 Persons = ManagerPerson.GetPersonListFromFile(PathToFiles.PathToList);
 
-            Console.WriteLine($"You have {Persons.Count} persons");
+            if (Persons.Count == 0)
+            {
+                Console.WriteLine($"You haven't persons");
+                return new Person();
+            }
 
             if (!ManagerPerson.GetPersonFromFile(PathToFiles.PathToLastPerson).Equals(new Person()))
             {

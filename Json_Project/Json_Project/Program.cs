@@ -46,8 +46,10 @@ namespace Project
 
         public static void InitFileSystem(string pathToLastPerson, string pathToListPersons)
         {
-            File.WriteAllText(pathToLastPerson, "{}");
-            File.WriteAllText(pathToListPersons, "{}");
+            for (int i = 1; i <= 10; i++)
+                CreatorPerson.AddPersonToList(new Person($"Name{i}", i));
+
+            SavePerson(PathToFiles.PathToList, CreatorPerson.Persons);
         }
     }
 

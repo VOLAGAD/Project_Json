@@ -4,8 +4,8 @@ namespace Project
 {
     static class PathToFiles
     {
-        public const string pathToList = "List_Persons.json";
-        public const string pathToLastPerson = "Last_Person.json";
+        public const string PathToList = "List_Persons.json";
+        public const string PathToLastPerson = "Last_Person.json";
     }
 
     static class ManagerPerson
@@ -43,6 +43,12 @@ namespace Project
             string json = JsonSerializer.Serialize(persons);
             File.WriteAllText(pathFile, json);
         }
+
+        public static void InitFileSystem(string pathToLastPerson, string pathToListPersons)
+        {
+            File.WriteAllText(pathToLastPerson, "{}");
+            File.WriteAllText(pathToListPersons, "{}");
+        }
     }
 
     static class CreatorPerson
@@ -65,11 +71,11 @@ namespace Project
         public static Person ChoosePerson()
         {
             if (Persons.Count == 0)
-                Persons = ManagerPerson.GetPersonListFromFile(PathToFiles.pathToList);
+                Persons = ManagerPerson.GetPersonListFromFile(PathToFiles.PathToList);
 
             Console.WriteLine($"You have {Persons.Count} persons");
 
-            if (!ManagerPerson.GetPersonFromFile(PathToFiles.pathToLastPerson).Equals(new Person()))
+            if (!ManagerPerson.GetPersonFromFile(PathToFiles.PathToLastPerson).Equals(new Person()))
             {
                 Console.WriteLine($"Last Person Load (0)");
                 Console.WriteLine("- - -");
@@ -85,13 +91,13 @@ namespace Project
             int.TryParse(Console.ReadLine() ?? "1", out int change);
 
             if (change == 0)
-                return ManagerPerson.GetPersonFromFile(PathToFiles.pathToLastPerson);
+                return ManagerPerson.GetPersonFromFile(PathToFiles.PathToLastPerson);
 
             for (int i = 0; i < Persons.Count; i++)
             {
                 if (change - 1 == i)
                 {
-                    ManagerPerson.SavePerson(PathToFiles.pathToLastPerson, Persons[i]);
+                    ManagerPerson.SavePerson(PathToFiles.PathToLastPerson, Persons[i]);
                     return Persons[i];
                 }
             }
@@ -133,6 +139,8 @@ namespace Project
     {
         static void Main(string[] args)
         {
+            ManagerPerson.InitFileSystem(PathToFiles.PathToLastPerson, PathToFiles.PathToList); // Обязательная строка!
+
             Person person = CreatorPerson.ChoosePerson();
 
             person.PrintDataPerson();

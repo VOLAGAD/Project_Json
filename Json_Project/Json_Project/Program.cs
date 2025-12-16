@@ -139,7 +139,7 @@ namespace Project
     {
         static void Main(string[] args)
         {
-            ManagerPerson.InitFileSystem(PathToFiles.PathToLastPerson, PathToFiles.PathToList); // Обязательная строка!
+            ManagerPerson.InitFileSystem(PathToFiles.PathToLastPerson, PathToFiles.PathToList); // The required line!
 
             Person person = CreatorPerson.ChoosePerson();
 
